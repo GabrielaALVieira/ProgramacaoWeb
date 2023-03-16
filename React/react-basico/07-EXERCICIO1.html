@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .style1{
+            background-color: white;
+            color: blueviolet;  
+            border-radius: 5px;
+            border: 2px solid rgb(234, 56, 250);
+            padding: 12px;  
+            border-style: dotted;   
+
+        }
+    
+        .style2{
+            background-color: yellow;
+            color:blue;    
+            border-radius: 6px;
+            border: 2px solid blue;
+            padding: 10px;  
+            border-style: dashed; 
+        }      
+        
+    </style>
+</head>
+
+<body>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <div id = "root"></div>
+    
+    <script type = "text/babel">
+
+        /*EXERCÍCIO DE FIXAÇÃO no 1
+
+        1) Crie dois estilos CSS, um que coloque o texto em uma cor e outro que coloque o texto em outra cor.
+
+        2) Declare uma função de componente que receba as seguintes props personalizadas: nome, sobrenome, dia, mês, ano.
+
+        3) Na função de componente, coloque um fragment e, dentro dele, dois parágrafos: no primeiro, deve ser aplicada a classe que deixa a cor do texto em uma cor
+          e, no outro, a classe que deixa a cor na outra cor.
+
+        4) No primeiro parágrafo, deve ser exibido o nome completo, composto por nome e sobrenome.
+
+        5) No segundo parágrafo, deve ser exibida a data de nascimento, composta pelo dia, pelo mês e pelo ano, separados por /.
+
+        6) No componente, crie, ainda, uma div. Dentro dela, deve ser exibida a idade que a pessoa terá ao final do ano, 
+        calculada por meio de um cálculo simples (2023 menos o ano de nascimento informado).
+
+        7) Faça os comentários que julgar necessário no código.
+
+        Esta atividade contará para a nota de Participação e Assiduidade (PA).
+
+        */
+
+        //Declaração da Função componente, com props personalizadas (linha 63) //fragment linha 64// parágrafo 1-linha 66 e parágrafo 2-linha 69
+
+        // na div, linha 75, cálculo simples, sem style
+
+        const Cadastro = ({nome, sobrenome, dia, mes, ano}) =>  
+        <> 
+               
+        <p className="style1"> Nome completo: {nome} {sobrenome} </p>    
+        
+        
+        <p className="style2"> Data de nascimento: {dia}/{mes}/{ano} </p>    
+
+
+        <div  className="style1">
+           
+            Idade é: {2023 - ano}
+            
+        </div>
+
+        </>
+
+
+        const container = 
+        <>
+            <Cadastro id="cadastro1" nome="Gabriela" sobrenome="Alves Licursi Vieira" dia={29} mes='01' ano={1985}/>
+
+        </>
+
+
+        const root = ReactDOM.createRoot(document.getElementById('root'))
+        root.render(container)
+
+
+        </script>
+    
+</body>
+</html>

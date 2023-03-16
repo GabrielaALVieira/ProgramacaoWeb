@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .sauda{
+            background-color: indigo;
+            border-radius: 8px;
+            color:white;
+            box-shadow: 2px 2px 6px rgba(0,0, 0, 0.25);
+            padding: 12px;
+            text-align: center;
+            font-family: Cambria, "Times New Roman", serif;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-td que react faz, cria tudo do div root-->
+    <div id = "root"></div>  
+    
+    <script type = "text/babel">
+
+        //FUNÇÃO DE COMPONENTE
+        //Funções de componente podem receber props entre {}
+
+        // function Saudacao({nome, msg}){   //1 parâmetro que são 2 (1 objeto) //função que tem 1 linha só que é de return, podemos transformar em arrow function
+        //     return <div className = "sauda">{msg}, {nome}! </div>
+        // }
+
+        //Função Saudacao convertida em arrow function
+        const Saudacao = ({nome, msg}) => <div className= "sauda"> {msg}, {nome}! </div> //props chamadas nome e msg. entre{} são objetos, não importa a ordem dos objetos e sim o nome
+
+        //Criaçao de componente usando chamada explícita à função. 
+        const saudacao1 = Saudacao({msg: 'Bom dia', nome: 'Dona Clementina'}) //chamada explicita à funçao de cima //chama a funcao explicitamente
+
+        //Criação de componente usando JSX
+        const saudacao2 = <Saudacao nome = "Seu Bita" msg="O sol já nasceu lá na fazendinha"/> //é como se fosse tag HTML. nome e msg são props//chama como JSX e coloca dentro de variável
+
+        // const container = 
+        //     <div>
+        //         {saudacao1}
+        //         {saudacao2}
+        //         <Saudacao nome = 'Pedro' msg = 'Devolve o chip' />  
+        //     </div>
+
+        const container = 
+            <> {/*Isto é um fragment, pseudoelemento usado para agrupar outros elementos. Forma de diminuir uma div quando inspeciona o elemento. */}
+                {saudacao1}
+                {saudacao2}
+                <Saudacao nome = 'Pedro' msg = 'Devolve o chip' />  {/*Vamos usar essa maneira*/}
+            </>
+
+            const root = ReactDOM.createRoot(document.getElementById('root'))
+            root.render(container)
+
+
+    </script>
+
+
+
+
+
+</body>
+</html>
