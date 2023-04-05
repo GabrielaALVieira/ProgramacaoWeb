@@ -26,8 +26,8 @@
 
         function handleChange(event){               
 
-           reais = reaisRef.current.value
-           dolar = dolarRef.current.value
+           reais = Number(reaisRef.current.value)
+           dolar = Number(dolarRef.current.value)
 
            if(dolar<=0){
             resultadoRef.current.textContent=`Insira valor do dólar`

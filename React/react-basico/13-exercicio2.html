@@ -32,7 +32,7 @@
                                     <span>Valor em reais</span><br />                        
                                     <input 
                                     type="number" 
-                                    onChange={event => setReais(event.target.value)} 
+                                    onChange={event => setReais(event.target.value)} //poderia ser setReais(Number(event.target.value)) e tira o Number da div cotação
                                     value={reais}
                                     />
                                 </label>
@@ -43,7 +43,7 @@
                                     <span>Cotação do dólar</span><br />
                                     <input 
                                         type="number" 
-                                        onChange={event => setDolar(event.target.value)}
+                                        onChange={event => setDolar(event.target.value)} //poderia ser setDolar(Number(event.target.value)) e tira o Number da div cotação
                                         value={dolar}
                                         />                                    
                                 </label>
