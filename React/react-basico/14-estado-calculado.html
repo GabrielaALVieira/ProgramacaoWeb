@@ -19,26 +19,56 @@
 
         function Form(){
 
+            console.count('Atualizou o componente')
+
             const [peso, setPeso] = React.useState('')
             const [altura, setAltura] = React.useState('')
-            const [imc, setImc] = React.useState('')
-            const [faixa, setFaixa] = React.useState('')
+           //const [imc, setImc] = React.useState('')
+           // const [faixa, setFaixa] = React.useState('')
+
+           //Estados calculados - teve q criar 2 funções para IMC e faixa. Usar variável comum não deu certo
+           //let imc, faixa
+
+           let imc = calcImc()
+           let faixa = determinarFaixa() //estados calculados
+
+           function calcImc(){
+             return Number(peso)/Number(altura)**2
+           }
+
+           function determinarFaixa(){
+                if(imc<18.5)      return 'Peso baixo'
+                else if(imc<24.5) return 'Peso normal'
+                else if(imc<30)   return 'Sobrepeso'
+                else if(imc<35)   return 'Obesidade (Grau I)'
+                else if(imc<40)   return 'Obesidade severa (Grau II)'
+                else              return 'obesidade mórbida(Grau III)'
+           }
 
             function handleChange(event){
                 if(event.target.name==='peso') setPeso(event.target.value)
                 else setAltura(event.target.value)
 
                 //Calculo do IMC
-                setImc(Number(peso)/Number(altura)**2)
+                //setImc(Number(peso)/Number(altura)**2)
+
+                //imc=Number(peso)/Number(altura)**2
 
                 //Determindo a faixa do IMC - importa a ordem - se entra na 1a condição, nao entra nas outras
 
-                if(imc<18.5)      setFaixa('Peso baixo')
-                else if(imc<24.5) setFaixa('Peso normal')
-                else if(imc<30)   setFaixa('Sobrepeso')
-                else if(imc<35)   setFaixa('Obesidade (Grau I)')
-                else if(imc<40)   setFaixa('Obesidade severa (Grau II)')
-                else              setFaixa('obesidade mórbida(Grau III)')
+                //if(imc<18.5)      setFaixa('Peso baixo')
+               // else if(imc<24.5) setFaixa('Peso normal')
+                //else if(imc<30)   setFaixa('Sobrepeso')
+                //else if(imc<35)   setFaixa('Obesidade (Grau I)')
+                //else if(imc<40)   setFaixa('Obesidade severa (Grau II)')
+               // else              setFaixa('obesidade mórbida(Grau III)')
+
+                //if(imc<18.5)      faixa='Peso baixo'
+               // else if(imc<24.5) faixa='Peso normal'
+               // else if(imc<30)   faixa='Sobrepeso'
+               // else if(imc<35)   faixa='Obesidade (Grau I)'
+              //  else if(imc<40)   faixa='Obesidade severa (Grau II)'
+              //  else              faixa='obesidade mórbida(Grau III)'
             } 
 
             
