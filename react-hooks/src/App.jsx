@@ -1,6 +1,8 @@
 import './App.css'
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import Exercicio01 from './exercicios/01'
+import Exercicio02 from './exercicios/02'
+import Home from './pages/Home'
 
 function App() {
  
@@ -9,7 +11,7 @@ function App() {
       <h1>Exercícios de React Hooks</h1>
       
       <BrowserRouter>
-      <ul>
+      <ul className='menu'>
         <li> <Link to="/01">Exercício 01</Link></li>
         <li> <Link to="/02">Exercício 02</Link></li>
         <li> <Link to="/03">Exercício 03</Link></li>
@@ -19,8 +21,9 @@ function App() {
       </ul>
       <hr />
         <Routes>
+          <Route path="/" element={<Home/>}/>
           <Route path="/01" element = {<Exercicio01/>}/>
-          <Route path="/02" />
+          <Route path="/02" element = {<Exercicio02/>}/>
           <Route path="/03" />
           <Route path="/04" />
           <Route path="/05" />

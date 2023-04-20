@@ -3,7 +3,7 @@ import * as React from 'react'
 function Greeting({initialName}) {
   // 💣 exclua esta declaração de variável e troque por uma chamada a React.useState
   //const name = ''
-  const [name, setName] = React.useState(initialName)
+  const [name, setName] = React.useState(initialName) //useEstate preserva uma info entre uma atualizacao e outra
 
   function handleChange(event) {
     // 🐨 atualize o nome aqui baseado em event.target.value
