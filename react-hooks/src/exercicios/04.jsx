@@ -33,7 +33,7 @@ function Board() {
     //
     // 🐨 faça uma cópia da matriz dos quadrados
     // 💰 `[...squares]` é do que você precisa!)
-    const squaresCopy = [...squares]
+    const squaresCopy = [...squares] //square é a posição e squares é o vetor
     
     // 🐨 ajuste o valor do quadrado que foi selecionado
     // 💰 `squaresCopy[square] = nextValue`
