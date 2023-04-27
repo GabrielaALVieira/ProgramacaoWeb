@@ -4,7 +4,19 @@ function Board() {
   // 🐨 squares é o estado para este componente. Adicione useState para squares
   //const squares = Array(9).fill(null) //cria array de 9 possições q sao iniciadas com 9 null
 
-  const [squares, setSquares] = React.useState(Array(9).fill(null)) //colocamos como variável de estado
+  //Quando o componente for carregado, verificamos se existe estado salvo e
+  //inicializamos a variável de estado com isso.
+  //Como o estado salvo é string e a nossa variável de estado é vetor
+  //é necessário converter de um para o outro, usando JSON.parse()
+
+  const [squares, setSquares] = React.useState(
+    //Usa o estado gravado no localStorage, se houver, ou um vetor de 9 nulos, caso contrário
+
+    //Fornecendo uma função em vez de um valor, o React entenderá que 
+    //queremos executar a ação de inicialização do estado apenas durante
+    //a fase de "mount" do ciclo de vida do componente, o que é chamado "lazy initializer" - não vai chamar a fução toda hora, só na fase mount, 1x
+   ()=> JSON.parse(window.localStorage.getItem('tic-tac-toe')) ?? Array(9).fill(null)   
+    ) //colocamos como variável de estado React.useState(Array(9).fill(null)))//Agora, se ele existir, guarda no local storage, se nao existir, inicializo com vetor de 9 posições, com JSON.parse
 
   // 🐨 Precisaremos dos seguintes itens de estados derivados: estado q posso calcular, sem ficar armazenando ele. 
   // - nextValue ('X' ou 'O')
@@ -16,6 +28,12 @@ function Board() {
   const nextValue = calculateNextValue(squares)
   const winner = calculateWinner(squares)
   const status = calculateStatus(winner, squares, nextValue)
+
+  React.useEffect(()=>{
+    //Como o estado squares é um vetor, ele deve ser convertido em 
+    //string com JSON.stringify(), antes de ser salvo no localStorage
+    window.localStorage.setItem('tic-tac-toe', JSON.stringify(squares))
+  }, [squares]) //esqueletinho do useEffect - DECORAR (arrow function e vetor vazio)
 
   // Esta é a função que o manipulador de clique no quadrado irá chamar. `square`
   // deve ser um índice. Portanto, se você clicar sobre o quadrado central, o
@@ -81,7 +99,7 @@ function Board() {
         restart
       </button>
       <hr />
-      <div> { JSON.stringify(squares) }</div>
+      
     </div>
   )
 }

@@ -4,6 +4,28 @@ import VanillaTilt from 'vanilla-tilt'
 function Tilt({children}) {
   // 🐨 crie uma ref aqui usando React.useRef()
 
+  const tiltRef = React.useRef() //permite que eu consiga referenciar um componente, sem usar id. Se usar id e repetir o componente na tela, vai dar problema. usando useRef, resolve isso
+
+  React.useEffect(() => {
+    //const tiltNode = document.getElementById('tilt')
+    const tiltNode = tiltRef.current
+    VanillaTilt.init(tiltNode, {
+       max: 100,
+       speed: 1400,
+       glare: true,
+       'max-glare': 1.5,
+  })
+
+  //A função retornada por um useEffect() será executada
+  //durante a fase amount (descarregamento) da página
+  //vai destrir a biblioteca do vanillatilt
+
+  return () => { //qd clicamos em outro exercício, vemos a mensagem de descarregando, 2x pq temos 2 componentes na página
+    alert('Descarregando...')
+    tiltNode.vanillaTilt.destroy()
+  }
+}, []) //vetor de dependencia vazio
+
   // 🐨 adicione uma função `React.useEffect` aqui e use VanillaTilt para
   // fazer sua div parecer fantástica.
   // 💰 assim:
@@ -24,7 +46,7 @@ function Tilt({children}) {
 
   // 🐨 adicione a prop `ref` à div `tilt-root` aqui:
   return (
-    <div className="tilt-root">
+    <div className="tilt-root" ref={tiltRef}>
       <div className="tilt-child">{children}</div>
     </div>
   )
