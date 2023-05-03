@@ -4,19 +4,25 @@ import * as React from 'react'
 // PokemonInfoFallback: o que é exibido enquanto as informações do pokémon
 // são carregadas
 // PokemonDataView: o componente usado para exibir as informações do pokémon
-import {PokemonForm} from '../pokemon'
+import {PokemonForm, fetchPokemon, PokemonInfoFallback, PokemonDataView } from '../pokemon'
 
 function PokemonInfo({pokemonName}) {
   // 🐨 crie o estado para o pokémon (null)
+  const [pokemon, setPokemon] = React.useState(null)
+  const [error, setError] = React.useState(null)
+  const [status, setStatus] = React.useState('idle') //aguardando informações. Vai gerar uma terceira atualização
 
   // 🐨 crie React.useEffect de modo a ser chamado sempre que pokemonName mudar.
   // 💰 NÃO SE ESQUEÇA DO VETOR DE DEPENDÊNCIAS!
-
-  // 💰 se pokemonName é falso (ou uma string vazia) não se preocupe em fazer 
+  React.useEffect(() => {
+    // 💰 se pokemonName é falso (ou uma string vazia) não se preocupe em fazer 
   // a requisição (retorne precocemente).
+  if (! pokemonName) return
 
   // 🐨 antes de chamar `fetchPokemon`, limpe o estado atual do pokemon
   // ajustando-o para null.
+  setPokemon(null) //limpa qq info de pokemon anterior
+  setError(null) //cada um desses set vai gerar atualização, ou seja, vai atualizar 2 vezes. é um gerenciamento melhor do q antes
 
   // (Isso é para habilitar o estado de carregamento ao alternar entre diferentes
   // pokémon.)
@@ -24,14 +30,70 @@ function PokemonInfo({pokemonName}) {
   //   fetchPokemon('Pikachu').then(
   //     pokemonData => {/* atualize todos os estados aqui */},
   //   )
-  // 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
-  // 🐨 retorne o seguinte baseado nos estados `pokemon` e `pokemonName`:
-  //   1. não há pokemonName: 'Informe um pokémon'
-  //   2. tem pokemonName mas não pokemon: <PokemonInfoFallback name={pokemonName} />
-  //   3. tem pokemon: <PokemonDataView pokemon={pokemon} />
+  setStatus('pending') //requisição feita, aguardando desfecho
+  fetchPokemon(pokemonName).then( //Requisição deu certo!
+    pokemonData => {
+      setPokemon(pokemonData) //o q foi recebido do be, foi colocado numa variavel de estado setPokemon
+      setStatus('resolved') //Promessa cumprida
+    }
+  )
+
+  .catch( //Requisição deu errado!
+  error => {
+    setError(error)  
+    setStatus('rejected') //promessa frustrada
+  }
+  //error => {
+    //console.error(error)
+    //alert('Deu erro, verifique o console')
+    //}
+  )  
+  //console.count('ATUALIZOU O COMPONENTE')
+
+}, [pokemonName]) // [] dentro vai ser a variavel q vai ser vigiada
+
+//useEffect PARA CONTAGEM DE ATUALIZAÇÕES
+React.useEffect(() => {
+  console.count('Atualizou o componente')
+})
+
+// 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
+// 🐨 retorne o seguinte baseado nos estados `pokemon` e `pokemonName`:
+//   1. não há pokemonName: 'Informe um pokémon'
+//   2. tem pokemonName mas não pokemon: <PokemonInfoFallback name={pokemonName} />
+//   3. tem pokemon: <PokemonDataView pokemon={pokemon} />
+
+  switch(status){
+    case 'idle':
+      return 'Informe Pokemon'
+    case 'pending':
+      return <PokemonInfoFallback name={pokemonName} />
+    case 'resolved':
+      return <PokemonDataView pokemon={pokemon} />
+    default: //rejected
+    return (
+      <div role="alert">
+        Houve um erro:
+        <pre style= {{whitespace: 'normal'}}>
+          {error.message} 
+        </pre>
+      </div>
+    )
+  }
+// if(error) return (
+//   <div role="alert">
+//     Houve um erro:
+//     <pre style= {{whitespace: 'normal'}}>
+//       {error.message} 
+//     </pre>
+//   </div>
+// )
+// else if(! pokemonName) return 'Informe um pokemon'
+// else if(pokemonName && !pokemon) return <PokemonInfoFallback name={pokemonName} />
+// else if(pokemon) return <PokemonDataView pokemon={pokemon} />
 
   // 💣 remova isso
-  return 'TODO'
+  //return 'TODO'
 }
 
 function Exercicio06() {
@@ -48,7 +110,9 @@ function Exercicio06() {
       <div className="pokemon-info">
         <PokemonInfo pokemonName={pokemonName} />
       </div>
+      
     </div>
+    
   )
 }
 
