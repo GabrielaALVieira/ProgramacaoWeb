@@ -8,9 +8,19 @@ import {PokemonForm, fetchPokemon, PokemonInfoFallback, PokemonDataView } from '
 
 function PokemonInfo({pokemonName}) {
   // 🐨 crie o estado para o pokémon (null)
-  const [pokemon, setPokemon] = React.useState(null)
-  const [error, setError] = React.useState(null)
-  const [status, setStatus] = React.useState('idle') //aguardando informações. Vai gerar uma terceira atualização
+  // const [pokemon, setPokemon] = React.useState(null)
+  // const [error, setError] = React.useState(null)
+  // const [status, setStatus] = React.useState('idle') //aguardando informações. Vai gerar uma terceira atualização
+  //abaixo: vamos resolver todas essas variáveis de estado avulsas, por isso, comentamos o modo anterior (acima)
+
+  const [state, setState] = React.useState({ //para criar objeto, abre {}
+    pokemon: null,
+    error: null,
+    status: 'idle'
+  })
+
+  //criando constantes somente leitura por meio de desestruturação
+  const {pokemon, error, status} = state //aqui desmontamos a variável state em 3 
 
   // 🐨 crie React.useEffect de modo a ser chamado sempre que pokemonName mudar.
   // 💰 NÃO SE ESQUEÇA DO VETOR DE DEPENDÊNCIAS!
@@ -21,27 +31,33 @@ function PokemonInfo({pokemonName}) {
 
   // 🐨 antes de chamar `fetchPokemon`, limpe o estado atual do pokemon
   // ajustando-o para null.
-  setPokemon(null) //limpa qq info de pokemon anterior
-  setError(null) //cada um desses set vai gerar atualização, ou seja, vai atualizar 2 vezes. é um gerenciamento melhor do q antes
+  //setPokemon(null) //limpa qq info de pokemon anterior
+  //setError(null) //cada um desses set vai gerar atualização, ou seja, vai atualizar 2 vezes. é um gerenciamento melhor do q antes
 
+    setState({pokemon: null, error:null, status: 'pending'}) //atualiza os 3 campos de uma vez. Tem obj com 3 campos e atualiza isso.
   // (Isso é para habilitar o estado de carregamento ao alternar entre diferentes
   // pokémon.)
   // 💰 Use a função `fetchPokemon` para buscar um pokémon pelo seu nome:
   //   fetchPokemon('Pikachu').then(
   //     pokemonData => {/* atualize todos os estados aqui */},
   //   )
-  setStatus('pending') //requisição feita, aguardando desfecho
+  // setStatus('pending') //requisição feita, aguardando desfecho
+  
   fetchPokemon(pokemonName).then( //Requisição deu certo!
     pokemonData => {
-      setPokemon(pokemonData) //o q foi recebido do be, foi colocado numa variavel de estado setPokemon
-      setStatus('resolved') //Promessa cumprida
+      // setPokemon(pokemonData) //o q foi recebido do be, foi colocado numa variavel de estado setPokemon
+      // setStatus('resolved') //Promessa cumprida
+
+      setState({...state, pokemon: pokemonData, status: 'resolved'}) //...state faz cópia do state e copia os campos q queremos mudar
     }
   )
 
   .catch( //Requisição deu errado!
   error => {
-    setError(error)  
-    setStatus('rejected') //promessa frustrada
+    // setError(error)  
+    // setStatus('rejected') //promessa frustrada
+
+    setState({...state, error, status: 'rejected'}) //error é variável de estado e o valor tem o mesmo nome. Pode usar o propriedade abreviada (error:error - abrevia para somente error)
   }
   //error => {
     //console.error(error)
@@ -55,6 +71,7 @@ function PokemonInfo({pokemonName}) {
 //useEffect PARA CONTAGEM DE ATUALIZAÇÕES
 React.useEffect(() => {
   console.count('Atualizou o componente')
+  console.log({state})
 })
 
 // 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
