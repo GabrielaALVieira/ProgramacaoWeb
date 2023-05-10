@@ -68,20 +68,20 @@
         const [desconto, setDesconto] = React.useState('') //variável de estado
 
         function handleChange(event){ //função para atualizar valores de preco e desconto
-                if(event.target.name==='preco') setPreco(event.target.value)
-                else setDesconto(event.target.value)
+                if(event.target.name==='preco') setPreco(event.target.value) //podia ser: setPreco(Number(event.target.value))
+                else setDesconto(event.target.value) //podia ser: setDesconto(Number(event.target.value))
         }
 
         function precoDesconto(){  //função que retorna valor do preço com desconto (preco-desconto)
-            return Number(preco)-Number(desconto)
+            return Number(preco)-Number(desconto) // Number(preco) - Number(preco*desconto/100)
         }
 
         let precoDesc = precoDesconto()  //estado calculado. Variável recebe valor retornado por chamada à function precoDesconto()
 
         function classDesconto(){  //função que retorna a classe do desconto
-                if(desconto<=15)                      return 'Desconto negocial'
-                else if(desconto>=15.1&&desconto<=50) return 'Desconto promocional'
-                else if(desconto>50)                  return 'Desconto de liquidação'
+                if(desconto<=15)                      return 'Desconto negocial'  //if (desconto<=15)
+                else if(desconto>=15.1&&desconto<=50) return 'Desconto promocional' //if (desconto<=50)
+                else if(desconto>50)                  return 'Desconto de liquidação' //else
         }
 
         let classDesc = classDesconto()  //estado calculado. Variável que recebe valor retornado por function classDesconto()
@@ -132,9 +132,9 @@
                 <label>
                     <span>Preço cheio</span>
                     <input name="preco" 
-                    type="number" 
-                    onChange={handleChange} 
-                    value={preco}
+                           type="number" 
+                           onChange={handleChange} 
+                           value={preco}
                     />
                 </label>
             </div>
@@ -143,9 +143,9 @@
                 <label>
                     <span>Desconto (%)</span>
                     <input name="desconto" 
-                    type="number" 
-                    onChange={handleChange} 
-                    value={desconto} 
+                           type="number" 
+                           onChange={handleChange} 
+                           value={desconto} 
                     />
                 </label>
             </div>
