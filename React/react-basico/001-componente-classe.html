@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de área de formas geométricas planas</title>
+    <style>
+      * {
+        font-family: Candara, Arial, sans;
+      }
+      body {
+        background: linear-gradient(0deg, rgba(4,0,36,0.75) 0%, rgba(9,121,91,1) 35%, rgba(0,255,162,1) 100%);
+        height: 100vh;
+      }
+      main {
+        margin: 40px auto;
+        width: 512px;
+        max-width: 80%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+      label {
+        display: block;
+        margin-bottom: 16px;
+      }
+      label span {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div id="root"></div>
+
+      <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+      <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+      <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        import React from 'react';
+
+        class FormSoma extends React.Compoment {
+        constructor(props){ //classe FormSoma é extensão da superclasse Component do React, 
+          super(props); //então, recebe no construtor as props dessa superclasse, chamada de super.
+          this.state = {  //aqui, é iniciado o controle de estado das propriedades da classe criada e o estado inicial é acessado
+            base: localStorage.getItem("__base") || "",     //base, altura e tipo podem ser mostrados na tela com os valores armazenados no localStorage ou serem iniciados com vazio   
+            altura: localStorage.getItem("__altura") || "",
+            tipo: localStorage.getItem("__tipo") || "R",
+          }
+        }
+
+        calcularArea() { //método para calcular áreas, de acordo com o tipo de figura escolhido
+          let resultado;
+
+          switch (this.state.tipo) {
+            case "R": // Retângulo
+              resultado = Number(this.state.base) * Number(this.state.altura);
+              break;
+            case "T": // Triângulo
+              resultado = (Number(this.state.base) * Number(this.state.altura)) / 2;
+              break;
+            default:
+              // Elipse/círculo
+              resultado =
+                (Number(this.state.base) / 2) * (Number(this.state.altura) / 2) * Math.PI;
+          }
+
+          if (isNaN(resultado)) resultado = "";
+          else resultado = resultado.toLocaleString("pt-BR"); 
+
+          return resultado;
+        }
+
+        //O useEffet (para componente de função) é equivalente ao componentDidMount e componentDidUpdate no componente de classe.
+        //Os códigos de componentDidMount e componentDidUpdate são muito próximos, pois o primeiro é chamado quando o componente
+        //é criado e o segundo vai comparar propriedades e estados atuais com anteriores.
+        componentDidMount() { //método é chamado somente quando o componente é criado - 1 única vez
+          localStorage.setItem("__base", this.state.base);      //cria chave e seu valor
+          localStorage.setItem("__altura", this.state.altura);
+          localStorage.setItem("__tipo", this.state.tipo);
+        }
+        
+        //No componentDidUpdate há o controle dos estados dos inputs para base, altura e tipo. Esse  método é chamado 
+        //sempre que há alguma atualização no componente.
+        //Se os novos valores dos inputs são diferentes dos anteriores, há atualização 
+        //e os novos valores são armazenados no localStorage.
+        //Por convenção, são passados os parâmetros prevProps e prevState para o componentDidUpdate, pois assim é
+        //possível comparar propriedades e estados anteriores com os atuais.
+        componentDidUpdate(prevProps, prevState) { //método é chamado quando o componente sofre alguma alteração
+          if (prevState.base !== this.state.base || prevState.altura !== this.state.altura || prevState.tipo !== this.state.tipo
+          ) {
+            localStorage.setItem("__base", this.state.base);
+            localStorage.setItem("__altura", this.state.altura);
+            localStorage.setItem("__tipo", this.state.tipo);
+          }
+        }
+
+        //this.setState gerencia as atualizações dos inputs para base, altura e tipo, ou seja, 
+        //ocorre a atualização de estado do componente.
+        handleChangeBase = (event) => {
+          this.setState({ base: event.target.value }); 
+        };
+
+        handleChangeAltura = (event) => {
+          this.setState({ altura: event.target.value });
+        };
+
+        handleChangeTipo = (event) => {
+          this.setState({ tipo: event.target.value });
+        };
+
+        render(){ //método que vai manipular as alterações nos valores de base, altura e tipo de figura, bem como a área calculada
+          const area = this.calcularArea();
+          return (
+            <main>
+              <h1>Calculadora de área de formas geométricas planas</h1>
+              <form>
+                <label>
+                  <span>Medida da base</span>
+                  <input
+                    type="number"
+                    value={this.state.base} 
+                    onChange={this.handleChangeBase}   
+                  />
+                </label>
+
+                <label>
+                  <span>Medida da altura</span>
+                  <input
+                    type="number"
+                    value={this.state.altura}
+                    onChange={this.handleChangeAltura}
+                  />
+                </label>
+
+                <label>
+                  <span>Tipo de forma</span>
+                  <select
+                    value={this.state.tipo}
+                    onChange={this.handleChangeTipo}
+                  >
+                    <option value="R">Retângulo</option>
+                    <option value="T">Triângulo</option>
+                    <option value="E">Elipse/círculo</option>
+                  </select>
+                </label>
+
+                <label>
+                  <span>Área calculada</span>
+                  <div>
+                    <strong>{area}</strong>
+                  </div>
+                </label>
+              </form>
+            </main>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<FormSoma/>);
+
+    </script>
+  </body>
+</html>
