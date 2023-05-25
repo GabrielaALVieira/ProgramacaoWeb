@@ -1,9 +1,11 @@
 import React from 'react';
 import Typography from '@mui/material/Typography'
-
-import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { DataGrid } from '@mui/x-data-grid';
-
+import { format } from 'date-fns';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from '@mui/material/IconButton'
 
 export default function CustomerList(){
 
@@ -42,57 +44,82 @@ export default function CustomerList(){
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
-          field: 'firstName',
-          headerName: 'First name',
-          width: 150,
-          editable: true,
+          field: 'name',
+          headerName: 'Nome',
+          width: 300
         },
         {
-          field: 'lastName',
-          headerName: 'Last name',
-          width: 150,
-          editable: true,
+            field: 'ident_document',
+            headerName: 'CPF',
+            align: 'center',
+            headerAlign: 'center',
+            width: 150
+          },
+        {
+          field: 'birth_date',
+          headerName: 'Data nasc.',
+          align: 'center',
+          headerAlign: 'center',
+          width: 100,
+          //valueFormatter: params => format (params.birth_date, 'dd/MM/yyyy')
+          valueFormatter: (params) => {
+            if(params.value) return format(new Date(params.value), 'dd/MM/yyyy')
+            else return ''
+          }  
+        },        
+        {
+            field: 'city',
+            headerName: 'Município/UF',
+            width: 300,
+            //Colocando dois campos na mesma célula
+            valueGetter: params => params.row.city + '/' + params.row.uf
+          },
+        {
+          field: 'phone',
+          headerName: 'Celular',
+          align: 'center',
+          headerAlign: 'center',
+          width: 150
         },
         {
-          field: 'age',
-          headerName: 'Age',
-          type: 'number',
-          width: 110,
-          editable: true,
+          field: 'email',
+          headerName: 'E-mail',
+          width: 200,
         },
         {
-          field: 'fullName',
-          headerName: 'Full name',
-          description: 'This column has a value getter and is not sortable.',
-          sortable: false,
-          width: 160,
-          valueGetter: (params) =>
-            `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+            field: 'edit',
+            headerName: 'Editar',
+            headerAlign: 'center',
+            align: 'center',
+            width: 90,
+            renderCell: params =>
+                <IconButton aria-label= "Editar">
+                    <EditIcon />
+                </IconButton>
         },
-      ];
-      
-      const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-      ];
+        {
+            field: 'delete',
+            headerName: 'Excluir',
+            headerAlign: 'center',
+            align: 'center',
+            width: 90,
+            renderCell: params =>
+                <IconButton aria-label= "Excluir">
+                    <DeleteForeverIcon color="error" />
+                </IconButton>
+        },
+      ];     
       
 
     return (
         <>
-            <Typography variant="h1">
+            <Typography variant="h1" sx={{ mb: '50px'}}>
                 Listagem de clientes
             </Typography>
 
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Paper elevation ={4} sx={{ height: 400, width: '100%' }}>
             <DataGrid
-                rows={rows}
+                rows={customers}
                 columns={columns}
                 initialState={{
                 pagination: {
@@ -105,11 +132,8 @@ export default function CustomerList(){
                 checkboxSelection
                 disableRowSelectionOnClick
             />
-            </Box>
+            </Paper>
 
-            <div>
-                {JSON.stringify(customers)}
-            </div>
         </>
     )
 }
