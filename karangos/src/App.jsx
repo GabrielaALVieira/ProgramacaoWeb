@@ -1,3 +1,4 @@
+import './App.css'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -13,6 +14,7 @@ import { CssBaseline } from '@mui/material';
 
 import Homepage from './pages/Homepage';
 import CustomersList from './pages/CustomersList';
+import CustomersForm from './pages/CustomersForm'
 
 
 function App() { 
@@ -33,14 +35,12 @@ function App() {
               //backgroundColor: 'blue' - tira o azul do segundo box que estava dentro do primeiro box
             }}>
 
-            <Routes>
-              <Route path="/" element={ <Homepage /> } />
-            </Routes>
-
-            <Routes>
-              <Route path="/customers" element={ <CustomersList /> } />
-            </Routes>
-
+              <Routes>
+                <Route path="/" element={ <Homepage /> } />
+                <Route path="/customers" element={ <CustomersList /> } />
+                <Route path="/customers/new" element={ <CustomersForm /> } />
+                <Route path="/customers/:id" element={ <CustomersForm /> } />
+              </Routes>
 
             </Box>
             <FooterBar/>
