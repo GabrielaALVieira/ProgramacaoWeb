@@ -14,7 +14,10 @@ import { CssBaseline } from '@mui/material';
 
 import Homepage from './pages/Homepage';
 import CustomersList from './pages/CustomersList';
-import CustomersForm from './pages/CustomersForm'
+import CustomersForm from './pages/CustomersForm';
+import CarsList from './pages/CarsList'; //import de element CarsList - para as rotas adicionadas abaixo
+import CarsForm from './pages/CarsForm'; //import de element CarsForm - para as rotas adicionadas abaixo
+
 
 
 function App() { 
@@ -36,10 +39,15 @@ function App() {
             }}>
 
               <Routes>
+              
                 <Route path="/" element={ <Homepage /> } />
                 <Route path="/customers" element={ <CustomersList /> } />
                 <Route path="/customers/new" element={ <CustomersForm /> } />
                 <Route path="/customers/:id" element={ <CustomersForm /> } />
+                <Route path="/cars" element={ <CarsList /> } />       {/*  inserção de nova rota: /cars que aponta para seu elemento CarsList */}
+                <Route path="/cars/new" element={ <CarsForm /> } />   {/*  inserção de nova rota: /cars/new que aponta para seu elemento CarsForm */}
+                <Route path="/cars/:id" element={ <CarsForm /> } />   {/*  inserção de nova rota: /cars/:id que aponta para seu elemento CarsForm */}
+
               </Routes>
 
             </Box>

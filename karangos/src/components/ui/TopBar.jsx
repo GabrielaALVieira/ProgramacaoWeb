@@ -9,8 +9,7 @@ export default function TopBar() { //mudamos somente o nome da função para Top
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" enableColorOnDark>
-        <Toolbar variant="dense">
-          
+        <Toolbar variant="dense">          
 
           <MainMenu/>
 
