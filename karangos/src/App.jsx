@@ -15,7 +15,7 @@ import { CssBaseline } from '@mui/material';
 import Homepage from './pages/Homepage';
 import CustomersList from './pages/CustomersList';
 import CustomersForm from './pages/CustomersForm';
-import CarsList from './pages/CarsList'; //import de element CarsList - para as rotas adicionadas abaixo
+import CarsList from './pages/CarsList'; //import de element CarsList - para a rota adicionada abaixo
 import CarsForm from './pages/CarsForm'; //import de element CarsForm - para as rotas adicionadas abaixo
 
 
