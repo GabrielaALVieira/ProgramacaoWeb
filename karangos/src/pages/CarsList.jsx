@@ -10,7 +10,7 @@ import Button from '@mui/material/Button'; //sempre assim o import de ícone
 import AddCircleIcon from '@mui/icons-material/AddCircle'; //import de ícone de botão diferente para Cadastrar novo carro
 import { Link } from 'react-router-dom'
 
-export default function CarsList(){ //Função CarsList 
+export default function CarsList(){ //Função CarsList - para gerar lista de carros
 
     const [state, setState] = React.useState({
         cars: {} //variável com objeto vazio
