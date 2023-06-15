@@ -18,6 +18,8 @@ import CustomersForm from './pages/CustomersForm';
 import CarsList from './pages/CarsList'; //import de element CarsList - para a rota adicionada abaixo
 import CarsForm from './pages/CarsForm'; //import de element CarsForm - para as rotas adicionadas abaixo
 
+import TestForm from './pages/TestForm'; //import de element TestForm - para as rotas adicionadas abaixo
+
 
 
 function App() { 
@@ -47,6 +49,7 @@ function App() {
                 <Route path="/cars" element={ <CarsList /> } />       {/*  inserção de nova rota: /cars que aponta para seu elemento CarsList */}
                 <Route path="/cars/new" element={ <CarsForm /> } />   {/*  inserção de nova rota: /cars/new que aponta para seu elemento CarsForm */}
                 <Route path="/cars/:id" element={ <CarsForm /> } />   {/*  inserção de nova rota: /cars/:id que aponta para seu elemento CarsForm */}
+                <Route path="/likes" element={ <TestForm /> } />   {/*  inserção de nova rota: /likes que aponta para seu elemento TestForm */}
 
               </Routes>
 

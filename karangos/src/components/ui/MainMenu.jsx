@@ -57,12 +57,20 @@ export default function MainMenu() {
             Clientes
         </MenuItem>
 
-        <MenuItem   //nova entrada de menu para Carros - leva à listagem de carros
+        <MenuItem  divider //nova entrada de menu para Carros - leva à listagem de carros
             onClick={handleClose}
             component={Link}
             to="/cars"
         >
             Carros
+        </MenuItem>
+
+        <MenuItem   //nova entrada de menu para Autora - leva à descrição da autora e aos likes
+            onClick={handleClose}
+            component={Link}
+            to="/likes"
+        >
+            Autora
         </MenuItem>
 
         
