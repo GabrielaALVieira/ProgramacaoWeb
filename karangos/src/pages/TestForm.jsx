@@ -15,7 +15,7 @@ import image from '../assets/Gabriela.jpg'
 
 
 export default function TestForm(){ //função será executada apenas 1x - queremos executar a ação de inicialização do estado apenas durante
-    //a fase de "mount" do ciclo de vida do componente, o que é chamado "lazy initializer" - não vai chamar a fução toda hora, só na fase mount, 1x
+    //a fase de "mount" do ciclo de vida do componente, o que é chamado "lazy initializer" - não vai chamar a função toda hora, só na fase mount, 1x
     
     const [state, setState] = React.useState(
 
@@ -62,7 +62,7 @@ export default function TestForm(){ //função será executada apenas 1x - quere
                     aria-label= "Curtir"
                     onClick={()=> handleCurtirButtonClick()} 
                 >
-                    <FavoriteIcon color="error" /> {/*/coração em vermelho*/}
+                    <FavoriteIcon color="error" /> {/*coração em vermelho*/}
                 </IconButton>
 
             </CardActions>
